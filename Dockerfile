@@ -10,7 +10,7 @@ RUN set -eux \
             *) echo >&2 "Warning: Edit Dockerfile and set openssl engine path for your architechture";; \ 
       esac \
    && apt-get update  \
-   && apt-get install --no-install-recommends --no-install-suggests -y apt-transport-https wget git curl build-essential  cmake unzip ca-certificates openssl libssl-dev  \
+   && apt-get install --no-install-recommends --no-install-suggests -y wget git curl build-essential  cmake unzip ca-certificates openssl libssl-dev  \
    && cd /usr/local/src \
    && wget "https://github.com/gost-engine/engine/archive/v${GOST_ENGINE_VERSION}.zip" \
    && unzip "v${GOST_ENGINE_VERSION}.zip" \
@@ -21,7 +21,7 @@ RUN set -eux \
    && cmake --build . --config Release \
    && cp ../bin/gost.so ${ENGINE_DIR} \
    ##clean-up
-   && apt-get remove --purge --auto-remove -y apt-transport-https wget git build-essential unzip cmake ca-certificates libssl-dev \
+   && apt-get remove --purge --auto-remove -y wget git build-essential unzip cmake ca-certificates libssl-dev \
    && cd ~ && rm -rf /var/lib/apt/lists/* /usr/local/src/* \ 
    # enable GOST engine
    && sed -i '20i openssl_conf=openssl_def' "${OPENSSL_CONF}" \
