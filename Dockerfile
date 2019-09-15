@@ -2,7 +2,6 @@ FROM debian:buster-slim
 LABEL openssl=1.1
 
 RUN set -eux \
-<<<<<<< HEAD
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
   && export GOST_PACKAGE=libengine-gost-openssl1.1_1.1.0.3-1+b1_amd64.deb \
   && apt-get update \
