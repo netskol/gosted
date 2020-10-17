@@ -3,7 +3,7 @@ LABEL openssl=1.1
 
 RUN set -eux \
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
-  && export GOST_PACKAGE=libengine-gost-openssl1.1_1.1.0.3-1+b1_amd64.deb \
+  && export GOST_PACKAGE=libengine-gost-openssl1.1_1.1.0.3-1_amd64.deb \
   && apt-get update \
   && apt-get install openssl wget openssl curl -y \
   # get Gost engine deb packet
