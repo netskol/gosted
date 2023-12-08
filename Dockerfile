@@ -4,7 +4,7 @@ FROM debian:bookworm-slim
 RUN set -eux \
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
   && apt-get update \
-  && apt-get install openssl openssl curl libengine-gost-openssl -y \
+  && apt-get install openssl curl libengine-gost-openssl -y \
   # enable GOST engine
   && sed -i '/\[openssl_init\]/ a engines = engine_section' "${OPENSSL_CONF}" \
   && echo "engines = engine_section" >> "${OPENSSL_CONF}" \
