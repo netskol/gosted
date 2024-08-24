@@ -1,13 +1,10 @@
-FROM debian:buster-slim
+FROM debian:bookworm-slim 
 LABEL openssl=1.1
 
 RUN set -eux \
   && export OPENSSL_CONF=/etc/ssl/openssl.cnf \
   && apt-get update \
-  && apt-get install openssl wget openssl curl -y \
-  # get Gost engine deb packet
-  && cd /tmp && wget http://ftp.ru.debian.org/debian/pool/main/libe/libengine-gost-openssl1.1/"${GOST_PACKAGE}" \
-  && dpkg -i /tmp/"${GOST_PACKAGE}" \
+  && apt-get install openssl curl libengine-gost-openssl -y \
   # enable GOST engine
   && sed -i '/\[openssl_init\]/ a engines = engine_section' "${OPENSSL_CONF}" \
   && echo "engines = engine_section" >> "${OPENSSL_CONF}" \
@@ -23,8 +20,7 @@ RUN set -eux \
   && echo "default_algorithms = ALL" >> "${OPENSSL_CONF}" \
   && echo "CRYPT_PARAMS = id-Gost28147-89-CryptoPro-A-ParamSet" >> "${OPENSSL_CONF}" \
   # clean up
-  && apt-get remove --purge --auto-remove -y wget \
-  && unset OPENSSL_CONF && unset GOST_PACKAGE \
-  && rm -rf /var/lib/apt/lists/* /tmp/*.deb
+  && unset OPENSSL_CONF \
+  && rm -rf /var/lib/apt/lists/*
 
 CMD ["bash"]
